@@ -1,3 +1,5 @@
+// Üres tömb létrehozása a forradalmak tárolására
+const array = []; // üres tömb létrehozása
 /**
  * Létrehoz egy új div elemet a megadott osztálynévvel.
  * @param {string} osztalyNev - Az osztály neve, amelyet a div elemhez rendelünk.
@@ -91,3 +93,41 @@ tableSim.appendChild(tbody); // tbody hozzáadása a táblázathoz
  const buttonFormSim = document.createElement('button'); // új gomb létrehozása
  buttonFormSim.textContent = 'hozzáadás'; // gomb szövegének beállítása
  formSim.appendChild(buttonFormSim); // gomb hozzáadása az űrlaphoz
+ // Űrlap eseménykezelő hozzáadása
+ /**
+  * Az űrlap elküldésekor lefutó eseménykezelő.
+  * Az űrlap adatait objektumba gyűjti, hozzáadja a tömbhöz, és megjeleníti a táblázatban.
+  * @param {Event} e - Az esemény objektuma.
+  */
+ formSim.addEventListener('submit', (e) => { // eseménykezelő az űrlap elküldésére
+    e.preventDefault(); // az alapértelmezett viselkedés megakadályozása (pl. oldal újratöltése)
+
+    const valueObject = {}; // objektum az űrlap mezőinek értékeihez
+    const inputFields = e.target.querySelectorAll('input'); // az űrlap összes input mezőjének lekérdezése
+
+    for (const inputField of inputFields) { // végigmegyünk az input mezőkön
+        valueObject[inputField.id] = inputField.value; // az input mező értékének hozzáadása az objektumhoz
+    }
+
+    const selectField = e.target.querySelector('select'); // a legördülő menü mező lekérdezése
+    if (selectField) { // ha létezik legördülő menü
+        valueObject[selectField.id] = selectField.value; // a legördülő menü értékének hozzáadása az objektumhoz
+    }
+
+    array.push(valueObject); // az objektum hozzáadása a tömbhöz
+
+    const tableBodyRow = document.createElement('tr'); // új sor létrehozása a táblázat törzséhez
+    tbody.appendChild(tableBodyRow); // a sor hozzáadása a táblázat törzséhez
+
+    const forradalomCell = document.createElement('td'); // új cella létrehozása a forradalomhoz
+    forradalomCell.textContent = valueObject.forradalom; // a cella tartalmának beállítása a "forradalom" mező értékére
+    tableBodyRow.appendChild(forradalomCell); // a cella hozzáadása a sorhoz
+
+    const evszamCell = document.createElement('td'); // új cella létrehozása az évszámhoz
+    evszamCell.textContent = valueObject.evszam; // a cella tartalmának beállítása az "évszám" mező értékére
+    tableBodyRow.appendChild(evszamCell); // a cella hozzáadása a sorhoz
+
+    const sikeresCell = document.createElement('td'); // új cella létrehozása a sikerességhez
+    sikeresCell.textContent = valueObject.sikeres; // a cella tartalmának beállítása a "sikeres" mező értékére
+    tableBodyRow.appendChild(sikeresCell); // a cella hozzáadása a sorhoz
+});
