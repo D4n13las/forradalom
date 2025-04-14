@@ -22,3 +22,24 @@ const urlapDiv = divLetrehoz('form'); // form osztályú div létrehozása
 // A container div-hez hozzáadjuk a táblázatot és az űrlapot
 kontenerDiv.appendChild(tablaDiv); // a táblázat div hozzáadása a containerhez
 kontenerDiv.appendChild(urlapDiv); // az űrlap div hozzáadása a containerhez
+// Táblázat létrehozása a táblázat div-en belül
+const tableSim = document.createElement('table'); // új táblázat elem létrehozása
+tablaDiv.appendChild(tableSim); // a táblázat hozzáadása a táblázat div-hez
+
+// Táblázat fejléceinek létrehozása
+const tableHead = document.createElement('thead'); // thead elem létrehozása
+tableSim.appendChild(tableHead); // thead hozzáadása a táblázathoz
+const tableHeadRow = document.createElement('tr'); // fejléc sor létrehozása
+tableHead.appendChild(tableHeadRow); // fejléc sor hozzáadása a thead-hez
+
+// Fejléc cellák létrehozása és hozzáadása
+const theadCells = ['Forradalom', 'Évszám', 'Sikeres']; // fejléc cellák tartalma
+for (const cellContent of theadCells) { // végigmegyünk a cellák tartalmán
+    const thcell = document.createElement('th'); // új th elem létrehozása
+    thcell.innerText = cellContent; // cella tartalmának beállítása
+    tableHeadRow.appendChild(thcell); // cella hozzáadása a fejléc sorhoz
+}
+
+// Táblázat törzsének létrehozása
+const tbody = document.createElement('tbody'); // tbody elem létrehozása
+tableSim.appendChild(tbody); // tbody hozzáadása a táblázathoz
