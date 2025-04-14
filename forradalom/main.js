@@ -69,7 +69,7 @@ tableSim.appendChild(tbody); // tbody hozzáadása a táblázathoz
          const select = document.createElement('select'); // új select elem létrehozása
          select.id = fieldElement.fieldid; // select azonosítójának beállítása
  
-         const options = ['igen', 'nem']; // legördülő menü opciói
+         const options = ["",'igen', 'nem']; // legördülő menü opciói
          for (const optionText of options) { // végigmegyünk az opciók listáján
              const option = document.createElement('option'); // új option elem létrehozása
              option.value = optionText; // opció értékének beállítása

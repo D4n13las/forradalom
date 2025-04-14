@@ -60,3 +60,56 @@ class Area {
         table.appendChild(tbody); // tbody hozzáadása a táblázathoz
      }
  }
+
+ /**
+  * A Form osztály az Area osztályból származik, és egy űrlapot hoz létre.
+  */
+ class Form extends Area {
+    /**
+     * Létrehoz egy új Form példányt.
+     * @param {string} cssClass - Az osztály neve, amelyet az űrlap div-hez rendelünk.
+     */
+    constructor(cssClass) { // osztálynév alapján űrlapot hozunk létre
+        super(cssClass); // meghívjuk az Area osztály konstruktorát
+        const form = document.createElement('form'); // új form elem létrehozása
+        this.div.appendChild(form); // az űrlap hozzáadása a div-hez
+
+        const fieldElementList = [ // mezők listája
+            { fieldid: 'forradalom', fieldLabel: 'forradalom'}, // forradalom mező
+            { fieldid: 'evszam', fieldLabel: 'évszám'}, // évszám mező
+            { fieldid: 'sikeres', fieldLabel: 'sikeres', type: 'select', options: ["",'igen', 'nem'] } // sikeres mező legördülő menüvel
+        ];
+
+        for (const fieldElement of fieldElementList) { // végigmegyünk a mezők listáján
+            const field = divLetrehoz('field'); // új field div létrehozása
+            form.appendChild(field); // field hozzáadása az űrlaphoz
+
+            const label = document.createElement('label'); // új label elem létrehozása
+            label.htmlFor = fieldElement.fieldid; // label összekapcsolása az input vagy select mezővel
+            label.textContent = fieldElement.fieldLabel; // label szövegének beállítása
+            field.appendChild(label); // label hozzáadása a field-hez
+
+            if (fieldElement.type === 'select') { // ha a mező típusa legördülő menü
+                const select = document.createElement('select'); // új select elem létrehozása
+                select.id = fieldElement.fieldid; // select azonosítójának beállítása
+                for (const optionText of fieldElement.options) { // végigmegyünk az opciók listáján
+                    const option = document.createElement('option'); // új option elem létrehozása
+                    option.value = optionText; // opció értékének beállítása
+                    option.textContent = optionText; // opció szövegének beállítása
+                    select.appendChild(option); // opció hozzáadása a select-hez
+                }
+                field.appendChild(select); // select hozzáadása a field-hez
+            } else { // ha a mező típusa szövegmező
+                const input = document.createElement('input'); // új input mező létrehozása
+                input.id = fieldElement.fieldid; // input mező azonosítójának beállítása
+                field.appendChild(input); // input mező hozzáadása a field-hez
+            }
+
+            field.appendChild(document.createElement('br')); // sortörés hozzáadása
+        }
+
+        const button = document.createElement('button'); // új gomb létrehozása
+        button.textContent = 'hozzáadás'; // gomb szövegének beállítása
+        form.appendChild(button); // gomb hozzáadása az űrlaphoz
+    }
+}
