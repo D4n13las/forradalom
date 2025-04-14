@@ -43,3 +43,51 @@ for (const cellContent of theadCells) { // végigmegyünk a cellák tartalmán
 // Táblázat törzsének létrehozása
 const tbody = document.createElement('tbody'); // tbody elem létrehozása
 tableSim.appendChild(tbody); // tbody hozzáadása a táblázathoz
+
+ // Űrlap létrehozása az űrlap div-en belül
+ const formSim = document.createElement('form'); // új form elem létrehozása
+ urlapDiv.appendChild(formSim); // az űrlap hozzáadása az űrlap div-hez
+ 
+ // Űrlap mezők definiálása
+ const fieldElementList = [ // mezők listája
+     { fieldid: 'forradalom', fieldLabel: 'forradalom' }, // név mező
+     { fieldid: 'evszam', fieldLabel: 'evszam' }, // születési év mező
+     { fieldid: 'sikeres', fieldLabel: 'sikeres' } // irányítószám mező
+ ];
+ 
+ // Mezők létrehozása és hozzáadása az űrlaphoz
+ for (const fieldElement of fieldElementList) { // végigmegyünk a mezők listáján
+     const field = divLetrehoz('field'); // új field div létrehozása
+     formSim.appendChild(field); // field hozzáadása az űrlaphoz
+ 
+     const label = document.createElement('label'); // új label elem létrehozása
+     label.htmlFor = fieldElement.fieldid; // label összekapcsolása az input mezővel
+     label.textContent = fieldElement.fieldLabel; // label szövegének beállítása
+     field.appendChild(label); // label hozzáadása a field-hez
+ 
+     if (fieldElement.fieldid === 'sikeres') { // ha a mező azonosítója "sikeres"
+         const select = document.createElement('select'); // új select elem létrehozása
+         select.id = fieldElement.fieldid; // select azonosítójának beállítása
+ 
+         const options = ['igen', 'nem']; // legördülő menü opciói
+         for (const optionText of options) { // végigmegyünk az opciók listáján
+             const option = document.createElement('option'); // új option elem létrehozása
+             option.value = optionText; // opció értékének beállítása
+             option.textContent = optionText; // opció szövegének beállítása
+             select.appendChild(option); // opció hozzáadása a select-hez
+         }
+ 
+         field.appendChild(select); // select hozzáadása a field-hez
+     } else { // ha nem a "sikeres" mező
+         const input = document.createElement('input'); // új input mező létrehozása
+         input.id = fieldElement.fieldid; // input mező azonosítójának beállítása
+         field.appendChild(input); // input mező hozzáadása a field-hez
+     }
+ 
+     field.appendChild(document.createElement('br')); // sortörés hozzáadása
+ }
+ 
+ // Hozzáadás gomb létrehozása és hozzáadása az űrlaphoz
+ const buttonFormSim = document.createElement('button'); // új gomb létrehozása
+ buttonFormSim.textContent = 'hozzáadás'; // gomb szövegének beállítása
+ formSim.appendChild(buttonFormSim); // gomb hozzáadása az űrlaphoz
